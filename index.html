@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Peta Sebaran SPAM Invila™</title>
+    <style>
+        /* Ukuran peta */
+        #map {
+            height: 500px;
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        h2 { font-family: Arial, sans-serif; color: #0056b3; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <h2>Peta Sebaran Proyek SPAM - Invila™</h2>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            // Titik tengah peta (Indonesia)
+            const indonesia = { lat: -2.5489, lng: 118.0149 };
+            
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 5,
+                center: indonesia,
+                mapTypeId: 'terrain'
+            });
+
+            // Data Lokasi Proyek Invila™
+            const proyekInvila = [
+                { name: "SPAM KIW Semarang (2017)", lat: -6.9537, lng: 110.3391 },
+                { name: "Salatiga Plant - IPAL (2025)", lat: -7.3305, lng: 110.5084 },
+                { name: "SPAM UT Banjarmasin (2025)", lat: -3.3166, lng: 114.5901 },
+                { name: "WTP 300 LPS Depok (2016)", lat: -6.4025, lng: 106.7942 },
+                { name: "SPAM Gunung Sari Gresik (2016)", lat: -7.1604, lng: 112.6566 },
+                { name: "Clarifier PDAM Tirtanadi Medan (2013)", lat: 3.5952, lng: 98.6722 }
+            ];
+
+            // Tambahkan Marker untuk setiap lokasi
+            proyekInvila.forEach(proyek => {
+                const marker = new google.maps.Marker({
+                    position: { lat: proyek.lat, lng: proyek.lng },
+                    map: map,
+                    title: proyek.name,
+                    animation: google.maps.Animation.DROP
+                });
+
+                // Popup Info saat marker diklik
+                const infoWindow = new google.maps.InfoWindow({
+                    content: `<strong>${proyek.name}</strong>`
+                });
+
+                marker.addListener("click", () => {
+                    infoWindow.open(map, marker);
+                });
+            });
+        }
+    </script>
+
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+    </script>
+
+</body>
+</html>
